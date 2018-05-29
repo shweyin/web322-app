@@ -13,5 +13,13 @@
     "start": "node server.js"
   },
   "author": "Shweyin Than",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shweyin/web322-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shweyin/web322-app/issues"
+  },
+  "homepage": "https://github.com/shweyin/web322-app#readme"
 }
