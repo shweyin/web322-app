@@ -1,10 +1,9 @@
 var employees = [];
 var departments = [];
-
 var fs = require('fs');
 
 
-function initialize() 
+exports.initialize = function()
 {
     return new Promise((resolve, reject) => {
         fs.readFile('data/departments.json', (err, data) => {
@@ -31,7 +30,7 @@ function initialize()
     });
 };
 
-function getAllEmployees()
+exports.getAllEmployees = function()
 {
     return new Promise((resolve, reject)=>{
         if(employees.length == 0)
@@ -45,34 +44,29 @@ function getAllEmployees()
     });
 };
 
-function getManagers()
+exports.getManagers =function ()
 {
     return new Promise((resolve, reject)=>{
         var managers = [];
-        var index = 0;
-        while(index < employees.length)
+        for(var i = 0; i < employees.length; i++)
         {
-            if(employees[index].isManager == true)
+            if(employees[i].isManager)
             {
-                managers.push(employees[index]);
-            }
-            else
-            {
-                index++;
+                managers.push(employees[i]);
             }
         }
-        if(managers.length > 0)
+        if(managers.length == 0)
         {
-            resolve(managers);
+            reject('Unable to find Managers');
         }
         else
         {
-            reject('Unable to find Managers');
+            resolve(managers);
         }
     });
 }
 
-function getDepartments()
+exports.getDepartments = function()
 {
     return new Promise((resolve, reject)=>{
         if(departments.length == 0)

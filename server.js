@@ -1,6 +1,5 @@
 var express = require('express');
-var mydata = require('data-service.js');
-
+var dataService = require('C:/Users/Shweyin/Desktop/web322-app/data-service.js');
 var app = express();
 
 var HTTP_PORT = process.env.PORT || 8080;
@@ -19,21 +18,50 @@ app.get('/about', function(req, res)
 });
 app.get('/employees', function(req, res)
 {
-    res.send('TODO: /employees get');
+    dataService.getAllEmployees()
+    .then(function(result)
+    {
+        res.json(result);
+    })
+    .catch(function(err){
+        console.log(err);
+    });
 });
 app.get('/managers', function(req, res)
 {
-    res.send('TODO: /managers get');
+    dataService.getManagers()
+    .then(function(result)
+    {
+        res.json(result);
+    })
+    .catch(function(err){
+        console.log(err);
+    });
 });
 app.get('/departments', function(req, res)
 {
-    res.send('TODO: /departments get');
+    dataService.getDepartments()
+    .then(function(result)
+    {
+        res.json(result);
+    })
+    .catch(function(err){
+        console.log(err);
+    });
 });
 app.get('*', function(req, res)
 {
-    res.send('Sorry, this page does not exist(It would be awesome if it did though)', 404);
+    res.send('Error 404: Sorry, this page does not exist(It would be awesome if it did though)', 404);
 });
 function onhttpstart(){
     console.log('server listening on port: ' + HTTP_PORT);
 };
-app.listen(HTTP_PORT, onhttpstart);
+
+dataService.initialize()
+.then(function()
+{
+    app.listen(HTTP_PORT, onhttpstart())
+})
+.catch(function(err){
+    console.log(err);
+});
